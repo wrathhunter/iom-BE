@@ -30,7 +30,7 @@ db.once('open', () => console.log('Connected to database'));
 // Define the task routes
 app.post('/api/create-user',userController.addUser);
 app.post('/api/login',userController.login);
-app.get('/api/getAllgetAllEnvironments',auth,environmentController.getAllEnvironments);
+app.get('/api/getAllEnvironments',auth,environmentController.getAllEnvironments);
 app.post('/api/addEnvironment',auth,serviceController.addEnvironment);
 app.post('/api/addService/:environmentId', auth,serviceController.addServiceToEnvironment);
 app.post('/api/addBranch/:serviceId', auth,serviceController.addBranchToService);
