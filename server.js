@@ -37,5 +37,5 @@ app.post('/api/addBranch/:name', auth,serviceController.addBranchToService);
 app.post('/api/updateBranch/:name', auth,serviceController.updateBranchState);
 app.get('/api/getAllServiceFromAnEnvironment/:name',auth,serviceController.getAllServiceFromAnEnvironment)
 app.post('/api/deployService/:name',auth,serviceController.deployService)
-
-app.listen(4000, () => console.log('Server started on port 4000'));
+const port=4000;
+app.listen(process.env.PORT || 4000, () => console.log(`Server started on port ${4000}`));
