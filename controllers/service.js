@@ -4,8 +4,14 @@ const Environment = require('../models/environment');
 
 exports.updateBranchState = async (req, res) => {
   try {
-    // Find the branch by ID
-    const branch = await Branch.findById(req.params.id);
+    // Find the service by name
+    const service = await Service.findOne({ name: req.body.serviceName }).populate('branches');
+    if (!service) {
+      return res.status(404).json({ message: 'Service not found' });
+    }
+
+    // Find the branch by name
+    const branch = service.branches.find(branch => branch.name === req.params.name);
     if (!branch) {
       return res.status(404).json({ message: 'Branch not found' });
     }
@@ -24,11 +30,11 @@ exports.updateBranchState = async (req, res) => {
 
 exports.deployService=async(req,res)=>{
   try {
-    const serviceId = req.params.serviceId;
+    const serviceName = req.params.name;
     const branchName = req.body.name;
 
     // Find the service by id
-    const service = await Service.findById(serviceId).populate('branches');
+    const service = await Service.findOne({name:serviceName}).populate('branches');
 
     // Check if the service exists
     if (!service) {
@@ -67,9 +73,8 @@ exports.deployService=async(req,res)=>{
 exports.addBranchToService = async (req, res) => {
   try {
     const { name, state } = req.body;
-    const serviceId = req.params.serviceId;
-
-    const service = await Service.findById(serviceId);
+    const serviceName = req.params.name;
+    const service = await Service.findOne({name:serviceName});
     if (!service) {
       return res.status(404).json({ message: 'Service not found' });
     }
@@ -88,11 +93,11 @@ exports.addBranchToService = async (req, res) => {
 };
 
 exports.addServiceToEnvironment = async (req, res) => {
-  const environmentId = req.params.environmentId;
+  const environmentName = req.params.name;
   const { name } = req.body;
 
   try {
-    const environment = await Environment.findById(environmentId).populate('services');
+    const environment = await Environment.findOne({name:environmentName}).populate('services');
     if (!environment) {
       return res.status(404).send({ message: 'Environment not found' });
     }
@@ -134,16 +139,16 @@ exports.addEnvironment = async (req, res) => {
 
 exports.getAllServiceFromAnEnvironment= async (req,res) =>{
   try{
-    const environmentId = req.params.id;
+    const environmentName = req.params.name;
 
-    // Find the environment by ID and populate its services array with the associated services and branches
-    const environment = await Environment.findById(environmentId).populate({
-      path: 'services',
-      populate: {
-        path: 'branches',
-        model: Branch,
-      },
-    });
+    // Find the environment by name and populate its services array with the associated services and branches
+const environment = await Environment.findOne({ name: environmentName }).populate({
+  path: 'services',
+  populate: {
+    path: 'branches',
+    model: Branch,
+  },
+});
 
     const services = environment.services;
 
@@ -153,7 +158,7 @@ exports.getAllServiceFromAnEnvironment= async (req,res) =>{
     }
 
     // Return the environment with its populated services and branches
-    res.json({ environment });
+    res.json( environment );
   }catch(error){
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });

@@ -32,10 +32,10 @@ app.post('/api/create-user',userController.addUser);
 app.post('/api/login',userController.login);
 app.get('/api/getAllEnvironments',auth,environmentController.getAllEnvironments);
 app.post('/api/addEnvironment',auth,serviceController.addEnvironment);
-app.post('/api/addService/:environmentId', auth,serviceController.addServiceToEnvironment);
-app.post('/api/addBranch/:serviceId', auth,serviceController.addBranchToService);
-app.post('/api/updateBranch/:id', auth,serviceController.updateBranchState);
-app.get('/api/getAllServiceFromAnEnvironment/:id',auth,serviceController.getAllServiceFromAnEnvironment)
-app.post('/api/deployService/:serviceId',auth,serviceController.deployService)
+app.post('/api/addService/:name', auth,serviceController.addServiceToEnvironment);
+app.post('/api/addBranch/:name', auth,serviceController.addBranchToService);
+app.post('/api/updateBranch/:name', auth,serviceController.updateBranchState);
+app.get('/api/getAllServiceFromAnEnvironment/:name',auth,serviceController.getAllServiceFromAnEnvironment)
+app.post('/api/deployService/:name',auth,serviceController.deployService)
 
 app.listen(4000, () => console.log('Server started on port 4000'));
