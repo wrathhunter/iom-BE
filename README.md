@@ -1,24 +1,41 @@
-#DevOps Management System
-##This is a backend system for managing DevOps operations. It allows users to create environments, services, and branches, and deploy them. It also provides user authentication and authorization.
 
-Technologies Used
-Node.js
-Express.js
-MongoDB
-Mongoose
-bcrypt
+# DevOps Management System
+
+This is a backend system for managing DevOps operations. It allows users to create environments, services, and branches, and deploy them. It also provides user authentication and authorization.
+
+
+## Technologies Used
+
+**Server:** Node.js, 
+Express.js, 
+MongoDB,
+Mongoose,
+bcrypt,
 jsonwebtoken
-Getting Started
+
+
+## Getting Started
+
 Clone the repository
-Install dependencies using 
-npm install
+
+```bash
+  npm install
+  cd my-project
+```
+
 Create a 
-.env
- file and add the following variables:
-MONGODB_URI
-: MongoDB connection string
-JWT_SECRET
-: Secret key for JWT token
+.env file and add the following variables:
+```
+MONGODB_URI: MongoDB connection string
+```
+```
+JWT_SECRET: Secret key for JWT token
+```
+
+
+
+
+
 Start the server using 
 npm start
 API Endpoints
